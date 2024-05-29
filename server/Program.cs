@@ -5,35 +5,50 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(opt =>
+{
+	opt.SwaggerDoc("v1", new OpenApiInfo { Title = "Fish Info API", Version = "v1" });
+	opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+	{
+		In = ParameterLocation.Header,
+		Description = "Please enter token",
+		Name = "Authorization",
+		Type = SecuritySchemeType.Http,
+		BearerFormat = "JWT",
+		Scheme = "bearer"
+	});
 
+	opt.AddSecurityRequirement(new OpenApiSecurityRequirement
+	{
+		{
+			new OpenApiSecurityScheme
+			{
+				Reference = new OpenApiReference
+				{
+					Type=ReferenceType.SecurityScheme,
+					Id="Bearer"
+				}
+			},
+			new string[]{}
+		}
+	});
+});
 builder.Services.AddDbContext<FishInfoContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("FishInfo")));
-builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+builder.Services.AddIdentityApiEndpoints<IdentityUser>(opt => 
+            { 
+                opt.Password.RequiredLength = 8; 
+                opt.User.RequireUniqueEmail = true; 
+                opt.Password.RequireNonAlphanumeric = false;
+            })
         .AddEntityFrameworkStores<FishInfoContext>()
         .AddDefaultTokenProviders();
-
-// JWT configuration
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-          options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true, // Validate the signing key
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"] ?? "")), // Configure the secret key
-            // ValidateIssuer = true, // Validate the issuer (optional)
-            // ValidIssuer = builder.Configuration["Jwt:Issuer"], // Set the valid issuer (optional)
-            // ValidateAudience = true, // Validate the audience (optional)
-            // ValidAudience = builder.Configuration["Jwt:Audience"], // Set the valid audience (optional)
-            ValidateLifetime = true, // Validate token expiration
-            ClockSkew = TimeSpan.Zero  // Set clock skew to zero for exact time synchronization (optional)
-        };
-    });
 
 builder.Services.AddMvc(options =>
 {
@@ -72,6 +87,7 @@ app.MapGet("/weatherforecast", () =>
         .ToArray();
     return forecast;
 })
+.RequireAuthorization()
 .WithName("GetWeatherForecast")
 .WithOpenApi();
 
