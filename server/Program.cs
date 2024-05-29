@@ -14,7 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<FishInfoContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("FishInfo")));
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentityApiEndpoints<IdentityUser>()
         .AddEntityFrameworkStores<FishInfoContext>()
         .AddDefaultTokenProviders();
 
@@ -40,6 +40,8 @@ builder.Services.AddMvc(options =>
     options.Filters.Add(new AuthorizeFilter()); // Apply authorization globally (optional)
 });
 
+builder.WebHost.UseUrls("http://localhost:5001");
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -55,6 +57,8 @@ var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
+
+app.MapGroup("/identity").MapIdentityApi<IdentityUser>();
 
 app.MapGet("/weatherforecast", () =>
 {
