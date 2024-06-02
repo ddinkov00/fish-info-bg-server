@@ -22,6 +22,11 @@ public static class Configuration
             app.UseSwaggerUI();
         }
 
+        app.UseCors(x => x
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .WithOrigins(app.Configuration.GetValue<string>("ClientAddress") ?? ""));
+
         app.UseHttpsRedirection();
         app.UseAuthorization();
     }
@@ -67,6 +72,8 @@ public static class Configuration
         });
 
         builder.Services.AddAutoMapper(typeof(Program));
+
+        builder.Services.AddCors();
 
         builder.WebHost.UseUrls("http://localhost:5001");
     }
