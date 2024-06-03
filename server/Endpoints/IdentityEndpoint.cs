@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
 
 namespace server;
@@ -12,7 +13,7 @@ public static class IdentityEndpoint
     {
         router
             .MapGroup(groupPrefix)
-            .MapIdentityApi<IdentityUser>()
+            .MapIdentityApi<ApplicationUser>()
             .WithOpenApi(operation => new(operation)
             {
                 Tags = [new OpenApiTag { Name = tagName }]

@@ -4,11 +4,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace data;
 
-public class FishInfoContext(DbContextOptions<FishInfoContext> options) : IdentityDbContext<IdentityUser>(options)
+public class FishInfoContext(DbContextOptions<FishInfoContext> options)
+    : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>(options)
 {
     public DbSet<FishSpecies> FishSpecies { get; set; }
 
     public DbSet<CloseSeason> CloseSeasons { get; set; }
+
+    public DbSet<Post> Posts { get; set; }
+
+    public DbSet<Like> Likes { get; set; }
+
+    public DbSet<PostImage> PostImages { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

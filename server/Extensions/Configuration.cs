@@ -1,6 +1,6 @@
 ﻿using data;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
 namespace server;
@@ -38,7 +38,7 @@ public static class Configuration
         builder.Services.AddDbContext<FishInfoContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("FishInfo")));
 
         builder.Services
-            .AddIdentityApiEndpoints<IdentityUser>()
+            .AddIdentityApiEndpoints<ApplicationUser>()
             .AddEntityFrameworkStores<FishInfoContext>();
 
         builder.Services.AddEndpointsApiExplorer();
