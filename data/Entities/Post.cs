@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace data;
+﻿namespace data;
 
 public class Post
 {

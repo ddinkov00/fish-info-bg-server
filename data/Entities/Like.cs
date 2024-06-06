@@ -8,9 +8,7 @@ public class Like
 
     public Post Post { get; set; }
 
-    public Guid UseId { get; set; }
+    public Guid ApplicationUserId { get; set; }
 
-    public int UserId { get; set; }
-
-    public ApplicationUser User { get; set; }
+    public ApplicationUser ApplicationUser { get; set; }
 }

@@ -10,6 +10,6 @@
 
 ### _Database_
 
-1. Add migration - dotnet ef migrations add Posts -p ./data.csproj -s ../server/server.csproj
+1. Add migration - dotnet ef migrations add LikeAdjustments -p ./data.csproj -s ../server/server.csproj
 2. Remove migration - dotnet ef migrations remove -p ./data.csproj -s ../server/server.csproj
 3. Update - dotnet ef database update -p ./data.csproj -s ../server/server.csproj
