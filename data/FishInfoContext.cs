@@ -17,6 +17,12 @@ public class FishInfoContext(DbContextOptions<FishInfoContext> options)
 
     public DbSet<PostImage> PostImages { get; set; }
 
+    public DbSet<Region> Regions { get; set; }
+
+    public DbSet<WaterSourceProhibitionMarker> WaterSourceProhibitionMarkers { get; set; }
+
+    public DbSet<WaterSourceProhibition> WaterSourceProhibitions { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql("Host=localhost;Database=fish-info;Username=postgres;Password=mitaka1971;Persist Security Info=true;Include Error Detail=true");
@@ -26,6 +32,9 @@ public class FishInfoContext(DbContextOptions<FishInfoContext> options)
     {
         new FishSpeciesConfig().Configure(builder.Entity<FishSpecies>());
         new CloseSeasonConfig().Configure(builder.Entity<CloseSeason>());
+        new RegionsConfig().Configure(builder.Entity<Region>());
+        new WaterSourceProhibitionConfig().Configure(builder.Entity<WaterSourceProhibition>());
+        new WaterSourceProhibitionMarkerConfig().Configure(builder.Entity<WaterSourceProhibitionMarker>());
 
         base.OnModelCreating(builder);
     }

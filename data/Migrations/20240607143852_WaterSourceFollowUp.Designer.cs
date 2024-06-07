@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using data;
@@ -11,9 +12,11 @@ using data;
 namespace data.Migrations
 {
     [DbContext(typeof(FishInfoContext))]
-    partial class FishInfoContextModelSnapshot : ModelSnapshot
+    [Migration("20240607143852_WaterSourceFollowUp")]
+    partial class WaterSourceFollowUp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -461,23 +464,6 @@ namespace data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Regions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Пловдив"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "София"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Варна"
-                        });
                 });
 
             modelBuilder.Entity("data.WaterSourceProhibition", b =>
@@ -507,40 +493,6 @@ namespace data.Migrations
                     b.HasIndex("RegionId");
 
                     b.ToTable("WaterSourceProhibitions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "от извора до моста на разклона за с. Борово (местността Паткарника - старото пъстървово стопанство)",
-                            Name = "р. Белишка",
-                            RegionId = 1,
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "от пътния мост (с координати 42.669393° N, 24.497495° Е) до вливането на р. Дебелоделещица в р. Права (с координати 42.654704° N, 24.487501 ° Е)",
-                            Name = "р. Палеш (Падеш)",
-                            RegionId = 1,
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "в участъка от стария римски мост над с. Бачково до първия тунел посока гр. Пловдив (с координати 41.959979° N, 24.861136° Е)",
-                            Name = "р. Чепеларска (Чая)",
-                            RegionId = 1,
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Description = "от стената на яз. Искър до ВЕЦ при Долни Пасарел",
-                            Name = "р. Искър",
-                            RegionId = 2,
-                            Type = 1
-                        });
                 });
 
             modelBuilder.Entity("data.WaterSourceProhibitionMarker", b =>
@@ -565,36 +517,6 @@ namespace data.Migrations
                     b.HasIndex("WaterSourceProhibitionId");
 
                     b.ToTable("WaterSourceProhibitionMarkers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Latitude = 41.844003000000001,
-                            Longitude = 24.847173999999999,
-                            WaterSourceProhibitionId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Latitude = 42.669392999999999,
-                            Longitude = 24.497495000000001,
-                            WaterSourceProhibitionId = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Latitude = 42.654704000000002,
-                            Longitude = 24.487501000000002,
-                            WaterSourceProhibitionId = 2
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Latitude = 41.959978999999997,
-                            Longitude = 24.861135999999998,
-                            WaterSourceProhibitionId = 3
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

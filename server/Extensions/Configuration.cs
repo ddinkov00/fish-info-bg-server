@@ -1,6 +1,5 @@
 ﻿using data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
 namespace server;
@@ -12,6 +11,7 @@ public static class Configuration
         app.RegisterIdentity();
         app.RegisterCloseSeasons();
         app.RegisterFishSpecies();
+        app.RegisterWaterSourceProhibitions();
     }
 
     public static void RegisterMiddlewares(this WebApplication app)
