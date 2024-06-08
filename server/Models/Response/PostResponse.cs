@@ -26,6 +26,8 @@ public class PostResponseProfile : Profile
     {
         this.CreateMap<Post, PostResponse>()
             .ForMember(dest => dest.ImagesUrl, opt => opt.MapFrom(src => src.Images.Select(x => x.Url)))
+            .ForMember(dest => dest.Likes, opt => opt.MapFrom(src => src.Likes.Count()))
+            .ForMember(dest => dest.Likes, opt => opt.MapFrom(src => false))
             .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.ApplicationUser.UserName));
     }
 }

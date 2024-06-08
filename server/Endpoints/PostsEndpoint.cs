@@ -25,7 +25,8 @@ public static class PostsEndpoint
         group.MapGet("", async (FishInfoContext context, IMapper mapper, HttpContext http) =>
             await context.Posts
                     .Include(x => x.ApplicationUser)
-                    .Include(x => x.ApplicationUser)
+                    .Include(x => x.Images)
+                    .Include(x => x.Likes)
                     .OrderByDescending(x => x.Created)
                     .Select(x => mapper.Map<PostResponse>(x))
                     .ToListAsync());
