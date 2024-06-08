@@ -12,6 +12,7 @@ public static class Configuration
         app.RegisterCloseSeasons();
         app.RegisterFishSpecies();
         app.RegisterWaterSourceProhibitions();
+        app.RegisterPosts();
     }
 
     public static void RegisterMiddlewares(this WebApplication app)

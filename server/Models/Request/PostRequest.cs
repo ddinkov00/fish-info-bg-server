@@ -24,6 +24,6 @@ public class PostRequestProfile : Profile
             .ForMember(src => src.ApplicationUserId, opt => opt.Ignore())
             .ForMember(src => src.Images, opt => opt.MapFrom(dest => dest.ImagesUrl
                 .Select(x => new PostImage { Url = x })))
-            .ForMember(src => src.Created, opt => opt.MapFrom(dest => DateTime.Now));
+            .ForMember(src => src.Created, opt => opt.MapFrom(dest => DateTime.UtcNow));
     }
 }
