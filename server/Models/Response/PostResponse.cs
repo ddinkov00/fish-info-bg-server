@@ -11,6 +11,10 @@ public class PostResponse
 
     public string Username { get; set; }
 
+    public double? LocationLatitude { get; set; }
+
+    public double? LocationLongitude { get; set; }
+
     public int Likes { get; set; }
 
     public bool IsLiked { get; set; }
